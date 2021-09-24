@@ -1,15 +1,17 @@
-from django.shortcuts import render, HttpResponse, HttpResponseRedirect
-from django.views.generic import CreateView, UpdateView, ListView, DetailView, View, TemplateView, DeleteView
-from django.urls import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib import messages
-from django.core.mail import send_mail, EmailMessage
 from django.contrib.auth.models import User
-from django.views.generic.edit import DeleteView
-from django.views import View
-from .models import Blog, SiteUtilities, AboutMe, ImageSlider, Subscribers, TypesOfTea
+from django.core.mail import EmailMessage, send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import HttpResponse, HttpResponseRedirect, render
+from django.urls import reverse, reverse_lazy
+from django.views import View
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  TemplateView, UpdateView, View)
+from django.views.generic.edit import DeleteView
 
+from .models import (AboutMe, Blog, ImageSlider, SiteUtilities, Subscribers,
+                     TypesOfTea)
 
 # Create your views here.
 
@@ -66,26 +68,26 @@ def blog(request):
 # def help(request):
 #     site_utils = SiteUtilities.objects.all()
 #     dict = {'site_utils' : site_utils}
-#
+
 #     if request.method == "POST":
 #         help_name = request.POST.get('help_name')
 #         help_email = request.POST.get('help_email')
 #         help_subject = request.POST.get('help_subject')
 #         help_message = request.POST.get('help_message')
-#
+
 #         print("\n===========\n", help_name,"\n=============\n") # for debugging
-#
+
 #         """ Contact / help mailing code
 #             goes here. """
-#
+
 #         messages.success(request, "Your Message Was Sent To The Admin Successfully!")
 #         message = "From: " + help_email + "n/"  " " + help_message
-#
+
 #         mail = EmailMessage(help_subject, message, to=[settings.EMAIL_HOST_USER])
 #         mail.content_subtype = 'html'
 #         mail.send()
-#
-#
+
+
 #     return render(request, 'Tea_App/help.html', dict)
 
 
@@ -128,7 +130,7 @@ def types(request):
 def search(request):
     if request.method == "POST":
         searched=request.POST['searched']
-        blog=Blog.objects.filter(name_contains=searched)
+        blog=Blog.objects.filter(title__contains=searched)
         return render(request, 'Tea_App/search.html', {'searched':searched,'blog':blog})
 
     else:

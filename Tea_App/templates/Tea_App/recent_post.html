@@ -8,13 +8,15 @@
                 {% if recent_blogs %}
                     {% for blog_item in recent_blogs %}
                         <!-- --------- Recent post body ---------- -->
-                        <a href="./blog-details.html"><div class="recent-post-body d-flex flex-row">
+                        {% comment %} <a href="{% url 'Tea_App:blog_details' item.id %}"> {% endcomment %}
+                        <div class="recent-post-body d-flex flex-row">
                             <img src="{{blog_item.thumbnail_img.url}}">
                             <div class="d-flex flex-column justify-content-end">
                             <span>Blog / {{blog_item.published_date}}</span>
                             <h6>{{blog_item.title}}</h6>
                             </div>
-                        </div></a>
+                        </div>
+                        {% comment %} </a> {% endcomment %}
                     {% endfor %}
 
                 {% else %}
